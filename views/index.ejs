@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chat</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <div class="container">
+        <!-- TODO add validation and error checking -->
+        <% if (data) { %>
+            <div class="posts">
+            <% data.posts.forEach(function(post){ %>
+                <%#- include('user/show', {user: user}); %>
+                <% 
+                    const user = data.users.find((el) => el.id == post.user);
+                    const message = post.message;
+                %>
+                <div class="post">
+                    <!-- TODO add backside - velocity for animations???-->
+                    <div class="post__image">
+                        <!-- TODO add image-->
+                    </div>
+                    <div class="post__content">
+                        <div class="post__header">
+                            <%= user.real_name %> - @<%= user.username %>
+                            <!-- TODO: add time - use moment -->
+                        </div>
+                        <div class="post__message">
+                            <%= message %>        
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+            </div>
+        <% } %>
+
+        <div class="composer">
+            <form action="" method="post">
+                <!-- TODO use JS to append character counter -->
+                <!-- TODO post to api and also add to screen -->
+                <input type="text" placeholder="what's happening?">
+                <button type="button"></button>
+            </form>
+        </div>
+
+    </div>
+  </body>
+</html>
