@@ -22,8 +22,11 @@
                     </div>
                     <div class="post__content">
                         <div class="post__header">
-                            <%= user.real_name %> - @<%= user.username %>
-                            <!-- TODO: add time - use moment -->
+                            <span><%= user.real_name %> - @<%= user.username %></span>
+                            <div class="post__timestamp">
+                                <span class="post__time-from-now"><%= moment.unix(post.ts).fromNow() %></span>
+                                <span class="post__time"><%= moment.unix(post.ts).format("MMM D, Y HH:mm:ss") %></span>
+                            </div>
                         </div>
                         <div class="post__message">
                             <%= message %>        

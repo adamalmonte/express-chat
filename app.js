@@ -5,7 +5,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-
 var logger = require('morgan');
 var sassMiddleware = require('node-sass-middleware');
 
@@ -13,6 +12,9 @@ var indexRouter = require('./routes/index');
 var apiRouter = require('./routes/chat');
 
 var app = express();
+
+var moment = require('moment');
+app.locals.moment = moment;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
