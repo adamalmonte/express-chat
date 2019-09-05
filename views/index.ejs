@@ -17,12 +17,14 @@
                 %>
                 <div class="post">
                     <!-- TODO add backside - velocity for animations???-->
-                    <div class="post__image">
-                        <!-- TODO add image-->
+                    <div class="post__image-wrapper">
+                        <img class="post__image" src="/images/<%= user.username %>.jpg">
                     </div>
                     <div class="post__content">
                         <div class="post__header">
-                            <span><%= user.real_name %> - @<%= user.username %></span>
+                            <div class="post__author">
+                                <%= user.real_name %> - @<%= user.username %>
+                            </div>
                             <div class="post__timestamp">
                                 <span class="post__time-from-now"><%= moment.unix(post.ts).fromNow() %></span>
                                 <span class="post__time"><%= moment.unix(post.ts).format("MMM D, Y HH:mm:ss") %></span>
