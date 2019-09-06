@@ -6,7 +6,6 @@
   </head>
   <body>
     <div class="container">
-        <!-- TODO add validation and error checking -->
         <% if (data) { %>
             <div class="posts" id="js-posts">
             <% data.posts.forEach(function(post){ %>
@@ -15,7 +14,6 @@
                     const message = post.message;
                 %>
                 <div class="post">
-                    <!-- TODO add backside - velocity for animations???-->
                     <div class="post__image-wrapper">
                         <img class="post__image" src="/images/<%= user ? `${user.username}.jpg` : 'better.jpg' %>">
                     </div>
@@ -45,8 +43,7 @@
         <div class="message-composer">
             <form class="message-composer__form" id="js-message-composer">
                 <!-- TODO use JS to append character counter -->
-                <!-- TODO post to api and also add to screen -->
-                <div class="message-composer__character-count  js-character-count">140</div>
+                <div class="message-composer__character-count" id="js-character-count">140</div>
                 <input class="message-composer__input  js-message" name="message" type="text" placeholder="what's happening?">
                 <input class="message-composer__input  js-timestamp" type="hidden" name="ts">
                 <button class="message-composer__send" type="submit"><i class="material-icons">send</i></button>

@@ -6,6 +6,8 @@ $gray2: #B0BDBD;
 $green: #1EC298;
 $white: #FFFFFF;
 $purple: #291941;
+$red: #DC3545;
+$yellow: #FFC107;
 
 body {
   padding: 50px;
@@ -91,6 +93,7 @@ body {
     // transform: translateZ(0);
     position: relative;
     transition: color 0.2s, background-color 0.2s;
+    word-break: break-word;
 
     &.post__message--active {
         background-color: $purple;
@@ -159,6 +162,24 @@ body {
 .message-composer__form {
     display: flex;
     height: 100%;
+
+    &.message-composer__form--warning {
+        .message-composer__character-count {
+            color: $yellow;
+        }
+    }
+
+    &.message-composer__form--error {
+        .message-composer__character-count,
+        .message-composer__input,
+        .message-composer__send .material-icons {
+            color: $red;
+        }
+
+        .message-composer__send {
+            pointer-events: none;
+        }
+    }
 }
 
 .message-composer__character-count {
