@@ -7,7 +7,7 @@
   <body>
     <div class="container">
         <% if (data) { %>
-            <div class="posts" id="js-posts">
+            <div class="posts" id="js-post-container">
             <% data.posts.forEach(function(post){ %>
                 <% 
                     const user = data.users.find((el) => el.id == post.user);
@@ -26,7 +26,7 @@
                                 <span class="post__time-from-now"><%= moment.unix(post.ts).fromNow() %></span>
                             </div>
                         </div>
-                        <div class="post__message  js-post-message">
+                        <div class="post__message  js-messages">
                             <div class="post__message-front">
                                 <%= message %>
                             </div>
@@ -42,7 +42,6 @@
 
         <div class="message-composer">
             <form class="message-composer__form" id="js-message-composer">
-                <!-- TODO use JS to append character counter -->
                 <div class="message-composer__character-count" id="js-character-count">140</div>
                 <input class="message-composer__input  js-message" name="message" type="text" placeholder="what's happening?">
                 <input class="message-composer__input  js-timestamp" type="hidden" name="ts">

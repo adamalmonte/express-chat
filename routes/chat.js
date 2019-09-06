@@ -12,7 +12,6 @@ router.route('/')
     })
     .post((req, res) => {
         // accept a single new post
-
         const message = req.body.message;
         const ts = req.body.ts;
         const tsFromNow = moment.unix(ts).fromNow();

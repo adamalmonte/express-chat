@@ -1,24 +1,38 @@
-const form = document.getElementById('js-message-composer');
-form.addEventListener('submit', appendTimestampAndPOST);
+/* Posts */
+const postsContainer   = document.getElementById('js-post-container');
+const messages         = document.getElementsByClassName('js-messages');
 
-const messageField = form.querySelector('.js-message');
-const maxChars = 140;
+/* Form Elements */
+const form             = document.getElementById('js-message-composer');
+const counterEl        = document.getElementById('js-character-count');
+const messageField     = form.querySelector('.js-message');
+const timestampField   = form.querySelector('.js-timestamp');
 
-const messages = document.getElementsByClassName('js-post-message');
+/* Classes */
+const formErrorClass   = 'message-composer__form--error';
+const formWarningClass = 'message-composer__form--warning';
+
+/* Other constants */
+const maxChars         = 140;
+
+/* Event Bindings */
+messageField.onkeydown = updateCharCount;
+form.onsubmit = handleFormSubmission;
+
 for (let i = 0; i < messages.length; i++) {
-    messages[i].addEventListener('touchstart', toggleMessageActiveState);
-    messages[i].addEventListener('mouseover', toggleMessageActiveState);
-    messages[i].addEventListener('mouseout', toggleMessageActiveState);
+    messages[i].ontouchstart = toggleMessageActiveState;
+    messages[i].onmouseover  = toggleMessageActiveState;
+    messages[i].onmouseout   = toggleMessageActiveState;
 }
 
-function appendTimestampAndPOST(ev) {
+/* Functions */
+function handleFormSubmission(ev) {
     ev.preventDefault();
 
     if (messageField.value.length > maxChars) {
         return false;
     }
 
-    const timestampField = form.querySelector('.js-timestamp');
     timestampField.value = Math.floor(new Date().getTime() / 1000);
 
     const formBody = {
@@ -36,15 +50,19 @@ function appendTimestampAndPOST(ev) {
     .then(res => res.json())
     .then(response => {
         console.log('Success:', JSON.stringify(response));
-        appendMessage(response);
+
+        appendUserMessageToDOM(response);
+
+        _checkFormErrorClass();
+        _checkFormWarningClass();
+
         messageField.value = '';
+        counterEl.innerHTML = maxChars;
     })
     .catch(error => console.error('Error:', error));
 }
 
-function appendMessage(data) {
-    const postsContainer = document.getElementById('js-posts');
-
+function appendUserMessageToDOM(data) {
     const newMessage = document.createElement('div');
     newMessage.className = "post post--user";
 
@@ -82,31 +100,33 @@ function toggleMessageActiveState(ev) {
     el.classList.toggle('post__message--active');
 }
 
-function characterCounter() {
-    const counterEl = document.getElementById('js-character-count');
+function updateCharCount(ev) {
+    setTimeout(function(){
+        let remaining = maxChars - messageField.value.length;
+        counterEl.innerHTML = remaining;
+        
+        if (remaining < 0) {
+           _checkFormWarningClass();
+            form.classList.add(formErrorClass);
+        } else if (remaining <= 20) {
+            _checkFormErrorClass();
+            form.classList.add(formWarningClass);
+        } else {
+            _checkFormErrorClass();
+            _checkFormWarningClass();
+        }
+    }, 1);
+}
 
-    const errorClass = 'message-composer__form--error';
-    const warningClass = 'message-composer__form--warning';
-
-    messageField.onkeydown = function() {
-        setTimeout(function(){
-            let remaining = maxChars - messageField.value.length;
-            counterEl.innerHTML = remaining;
-            
-            if (remaining < 0) {
-                form.classList.add(errorClass);
-            } else if (remaining <= 20) {
-                form.classList.add(warningClass);
-            } else {
-                if (form.classList.contains(errorClass)){
-                    form.classList.remove(errorClass)
-                }
-                if (form.classList.contains(warningClass)){
-                    form.classList.remove(warningClass)
-                }
-            }
-        }, 1);
+/* Helper functions */
+function _checkFormErrorClass() {
+    if (form.classList.contains(formErrorClass)){
+        form.classList.remove(formErrorClass)
     }
 }
 
-characterCounter();
+function _checkFormWarningClass() {
+    if (form.classList.contains(formWarningClass)){
+        form.classList.remove(formWarningClass)
+    }    
+}
