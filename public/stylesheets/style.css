@@ -1,20 +1,34 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 body {
   padding: 50px;
   font-family: 'Roboto', "Lucida Grande", Helvetica, Arial, sans-serif; }
 
-a {
-  color: #00B7FF; }
-
-.posts {
+.container {
   max-width: 960px;
   margin: 0 auto; }
+
+.posts {
+  padding-bottom: 60px; }
 
 .post {
   display: flex;
   max-width: 70%; }
   .post + .post {
     margin-top: 15px; }
+  .post.post--user {
+    margin-left: auto; }
+    .post.post--user .post__content {
+      order: 1; }
+    .post.post--user .post__image-wrapper {
+      order: 2;
+      margin-right: 0;
+      margin-left: 10px; }
+    .post.post--user .post__author {
+      display: none; }
+    .post.post--user .post__message {
+      background-color: #1EC298;
+      color: #FFFFFF; }
 
 .post__image-wrapper {
   height: 50px;
@@ -37,21 +51,80 @@ a {
   line-height: 16px;
   margin: 0 10px; }
 
-.post__time {
-  display: none; }
-
-.post__timestamp:hover {
-  cursor: pointer; }
-  .post__timestamp:hover .post__time-from-now {
-    display: none; }
-  .post__timestamp:hover .post__time {
-    display: block; }
-
 .post__message {
   background-color: #F6F6F6;
   border-radius: 6px;
+  cursor: pointer;
   font-size: 14px;
   line-height: 18px;
-  padding: 15px; }
+  padding: 15px;
+  position: relative;
+  transition: color 0.2s, background-color 0.2s; }
+  .post__message.post__message--active {
+    background-color: #291941;
+    color: #FFFFFF; }
+
+.post__message-front,
+.post__message-back {
+  height: 100%;
+  width: 100%;
+  transition: opacity 0.2s;
+  pointer-events: none; }
+
+.post__message-front {
+  opacity: 1; }
+  .post__message.post__message--active .post__message-front {
+    opacity: 0; }
+
+.post__message-back {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  text-align: center;
+  top: 0; }
+  .post__message-back .material-icons {
+    font-size: 12px;
+    margin-right: 5px; }
+  .post__message.post__message--active .post__message-back {
+    opacity: 1; }
+
+.message-composer {
+  border-top: 1px solid #1EC298;
+  height: 56px; }
+
+.message-composer__form {
+  display: flex;
+  height: 100%; }
+
+.message-composer__character-count {
+  color: #B0BDBD;
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  justify-content: center;
+  padding: 0 10px 0 5px; }
+
+.message-composer__input {
+  border: none;
+  font-size: 14px;
+  height: 100%;
+  width: calc(100% - 34px); }
+  .message-composer__input:focus {
+    outline: none; }
+
+.message-composer__send {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  height: 100%; }
+  .message-composer__send .material-icons {
+    color: #B0BDBD;
+    font-size: 20px;
+    transition: color 0.4s; }
+  .message-composer__send:hover .material-icons {
+    color: #1EC298; }
 
 /*# sourceMappingURL=style.css.map */

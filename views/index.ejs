@@ -8,9 +8,8 @@
     <div class="container">
         <!-- TODO add validation and error checking -->
         <% if (data) { %>
-            <div class="posts">
+            <div class="posts" id="js-posts">
             <% data.posts.forEach(function(post){ %>
-                <%#- include('user/show', {user: user}); %>
                 <% 
                     const user = data.users.find((el) => el.id == post.user);
                     const message = post.message;
@@ -18,7 +17,7 @@
                 <div class="post">
                     <!-- TODO add backside - velocity for animations???-->
                     <div class="post__image-wrapper">
-                        <img class="post__image" src="/images/<%= user.username %>.jpg">
+                        <img class="post__image" src="/images/<%= user ? `${user.username}.jpg` : 'better.jpg' %>">
                     </div>
                     <div class="post__content">
                         <div class="post__header">
@@ -27,11 +26,15 @@
                             </div>
                             <div class="post__timestamp">
                                 <span class="post__time-from-now"><%= moment.unix(post.ts).fromNow() %></span>
-                                <span class="post__time"><%= moment.unix(post.ts).format("MMM D, Y HH:mm:ss") %></span>
                             </div>
                         </div>
-                        <div class="post__message">
-                            <%= message %>        
+                        <div class="post__message  js-post-message">
+                            <div class="post__message-front">
+                                <%= message %>
+                            </div>
+                            <div class="post__message-back">
+                                <span><i class="material-icons">calendar_today</i> active since <%= moment.unix(post.ts).format("MMM D, Y") %></span> 
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -39,15 +42,19 @@
             </div>
         <% } %>
 
-        <div class="composer">
-            <form action="" method="post">
+        <div class="message-composer">
+            <form class="message-composer__form" id="js-message-composer">
                 <!-- TODO use JS to append character counter -->
                 <!-- TODO post to api and also add to screen -->
-                <input type="text" placeholder="what's happening?">
-                <button type="button"></button>
+                <div class="message-composer__character-count  js-character-count">140</div>
+                <input class="message-composer__input  js-message" name="message" type="text" placeholder="what's happening?">
+                <input class="message-composer__input  js-timestamp" type="hidden" name="ts">
+                <button class="message-composer__send" type="submit"><i class="material-icons">send</i></button>
             </form>
         </div>
 
     </div>
+
+    <script src="/js/main.js"></script>
   </body>
 </html>
