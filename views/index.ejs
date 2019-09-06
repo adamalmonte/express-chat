@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Chat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
@@ -13,15 +14,18 @@
                     const user = data.users.find((el) => el.id == post.user);
                     const message = post.message;
                 %>
-                <div class="post">
+                <div class="post <%= !user ? 'post--user' : ''  %>">
                     <div class="post__image-wrapper">
                         <img class="post__image" src="/images/<%= user ? `${user.username}.jpg` : 'better.jpg' %>">
                     </div>
                     <div class="post__content">
                         <div class="post__header">
+                            <% if (user) { %>
                             <div class="post__author">
-                                <%= user.real_name %> - @<%= user.username %>
+                                <span class="post__real-name"><%= user.real_name %> - </span><span class="post__username">@<%= user.username %></span>
                             </div>
+                            <% } %>
+
                             <div class="post__timestamp">
                                 <span class="post__time-from-now"><%= moment.unix(post.ts).fromNow() %></span>
                             </div>

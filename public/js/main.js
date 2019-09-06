@@ -17,13 +17,17 @@ const maxChars         = 140;
 
 /* Event Bindings */
 messageField.onkeydown = updateCharCount;
-form.onsubmit = handleFormSubmission;
+form.onsubmit          = handleFormSubmission;
 
 for (let i = 0; i < messages.length; i++) {
-    messages[i].ontouchstart = toggleMessageActiveState;
+    messages[i].ontouchend   = toggleMessageActiveStateTouch;
     messages[i].onmouseover  = toggleMessageActiveState;
     messages[i].onmouseout   = toggleMessageActiveState;
 }
+
+/* Function Calls */
+_scrollMessagesToBottom();
+
 
 /* Functions */
 function handleFormSubmission(ev) {
@@ -87,17 +91,26 @@ function appendUserMessageToDOM(data) {
         </div>            
     `;
 
-    newMessage.innerHTML = postHTML;
-    newMessage.ontouchstart = toggleMessageActiveState;
+    newMessage.innerHTML   = postHTML;
+    newMessage.ontouchend  = toggleMessageActiveStateTouch;
     newMessage.onmouseover = toggleMessageActiveState;
-    newMessage.onmouseout = toggleMessageActiveState;
+    newMessage.onmouseout  = toggleMessageActiveState;
 
     postsContainer.appendChild(newMessage);
+    _scrollMessagesToBottom();
 }
 
 function toggleMessageActiveState(ev) {
+    if (_isMobile()) {
+        ev.preventDefault();
+        ev.stopPropagation();
+    }
     const el = ev.target;
     el.classList.toggle('post__message--active');
+}
+
+function toggleMessageActiveStateTouch(ev) {
+    toggleMessageActiveState(ev);
 }
 
 function updateCharCount(ev) {
@@ -129,4 +142,12 @@ function _checkFormWarningClass() {
     if (form.classList.contains(formWarningClass)){
         form.classList.remove(formWarningClass)
     }    
+}
+
+function _scrollMessagesToBottom() {
+    postsContainer.scrollTop = postsContainer.scrollHeight;
+}
+
+function _isMobile() {
+    return navigator.userAgent.match(/Android|iPhone|iPad|iPod|Opera Mini|BlackBerry|IEMobile|WPDesktop/i);
 }

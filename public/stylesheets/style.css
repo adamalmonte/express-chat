@@ -1,19 +1,24 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 body {
-  padding: 50px;
+  padding: 20px;
   font-family: 'Roboto', "Lucida Grande", Helvetica, Arial, sans-serif; }
 
 .container {
-  max-width: 960px;
+  display: flex;
+  flex-direction: column;
+  height: calc(85vh - 58px);
+  justify-content: flex-end;
+  max-width: calc(100vw - 58px);
   margin: 0 auto; }
 
 .posts {
+  overflow-y: scroll;
   padding-bottom: 60px; }
 
 .post {
   display: flex;
-  max-width: 70%; }
+  max-width: 85%; }
   .post + .post {
     margin-top: 15px; }
   .post.post--user {
@@ -135,5 +140,21 @@ body {
     transition: color 0.4s; }
   .message-composer__send:hover .material-icons {
     color: #1EC298; }
+
+@media only screen and (max-width: 767px) {
+  .post__real-name {
+    display: none; }
+  .post__message.post__message--active .post__username {
+    display: none; }
+  .post__message.post__message--active .post__real-name {
+    display: inline; } }
+
+@media only screen and (min-width: 1024px) {
+  .container {
+    height: calc(100vh - 58px);
+    max-width: 965px; }
+  .post {
+    display: flex;
+    max-width: 70%; } }
 
 /*# sourceMappingURL=style.css.map */
