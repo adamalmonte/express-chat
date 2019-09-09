@@ -26,7 +26,7 @@ for (let i = 0; i < messages.length; i++) {
 }
 
 /* Function Calls */
-_scrollMessagesToBottom();
+_scrollMessagesToBottom(); // do this on page load in case the height of the messages > the height of the browser
 
 
 /* Functions */
